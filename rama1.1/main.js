@@ -232,7 +232,7 @@ function perdedores(array) {
     }
 }
 
-
+alert('esta es la rama Brryan')
 
 
 guardarGolesBoton.addEventListener('click', guardarGoles);
