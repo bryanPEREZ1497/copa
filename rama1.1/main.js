@@ -9,8 +9,7 @@ let equipoCreado = document.getElementById('creacionEquipos');
 let nombreEquipo = document.getElementById('nombreEquipo');
 let guardarGolesBoton = document.getElementById('guardarGoles');
 let equiposNombres = [];
-
-
+let esLaFinal = false;
 
 import { crear as crearEquipo } from './creacionEquipos.js';
 import { desaparecer as desaparecerCreacionEquipo } from './desaparecer.js';
@@ -48,7 +47,7 @@ function quitarInscripcion() {
 
 function empezarCampeonato() {
     if (sePuedeEmpezar) {
-        alert(`Estos son los equipos inscritos: ${equiposNombres}`);        
+        alert(`Estos son los equipos inscritos: ${equiposNombres}`);
         final(sortear(equiposNombres));
     } else {
         alert('equipos insuficientes');
@@ -67,15 +66,19 @@ function congelarInput() {
 
 function final(equipo) {
     if (equipo.length === 2) {
-        console.log(`final de la copa: ${equipo[0]} contra ${equipo[1]} `);
-        let pierde = prompt('FINAL: ¿Quién pierde?');
-        let index = equipo.indexOf(pierde);
-        equipo.splice(index, 1);
-        console.log(`Gana ${equipo}`);
-        alert(`Gana ${equipo}`);
+        esLaFinal = true;
+        alert(`Final de la copa: ${equipo[0]} contra ${equipo[1]}`);
+        mostrarPartidos(equipo);
+        // console.log(`Final de la copa: ${equipo[0]} contra ${equipo[1]}`);
+        // let pierde = prompt('FINAL: ¿Quién pierde?');
+        // let index = equipo.indexOf(pierde);
+        // equipo.splice(index, 1);
+        // console.log(`Gana ${equipo}`);
+        // alert(`Gana ${equipo}`);
     }
     else emparejar(equipo);
 }
+
 
 function crearArray(equipo) {
     let equiposEmparejados = [];
@@ -98,29 +101,31 @@ function emparejar(equipo) {
     }
     alert(`Aquí se han emparejado los equipos: ${array}`);
     equiposNombres = array;
-    mostrarPartidos(equiposNombres);
-    // yaHayPerdedores? eliminar(equiposNombres, perdedores()):
-    // if (yaHayPerdedores) {
-        
-    // }
-    //return equiposNombres;
-    
-    //return eliminar(array, perdedores());
+    return mostrarPartidos(equiposNombres);
 }
 
 
 function eliminar(array, b = valorB()) {
-    b.forEach(e => {
-        for (let i = 0; i <= array.length - 1; i++) {
-            let index = array[i].indexOf(e);
-            if (index >= 0) {
-                array[i].splice(index, 1);
-                i = array.length;
+    if (esLaFinal) {
+        let index = array.indexOf(b[0]);
+        array.splice(index, 1);
+        equiposNombres = array;
+        alert(`Los ganadores de la Copa Solanda son ${equiposNombres}`);
+
+    } else {
+        b.forEach(e => {
+            for (let i = 0; i <= array.length - 1; i++) {
+                let index = array[i].indexOf(e);
+                if (index >= 0) {
+                    array[i].splice(index, 1);
+                    i = array.length;
+                }
             }
-        }
-    });
-    equiposNombres = array;
-    return concatenar(equiposNombres);
+        });
+        equiposNombres = array;
+        return concatenar(equiposNombres);
+    }
+
 }
 
 function valorB() {
@@ -142,28 +147,48 @@ function concatenar(array) {
 /*SECTION  funciones para los goles*/
 
 
-function mostrarPartidos(array) {    
-    array.forEach(nombre => {
-        let [a, b] = nombre;
-        document.getElementById('partidos').innerHTML += a + '<input type="number" class="gol" placeholder="Goles">' + '<input  type="number" class="gol" placeholder="Goles">' + b + '<br>';
-    })
+function mostrarPartidos(array) {
+    if (esLaFinal) {
+        document.getElementById('partidos').innerHTML += array[0] + '<input type="number" class="gol" placeholder="Goles">' + '<input  type="number" class="gol" placeholder="Goles">' + array[1] + '<br>';
+
+    } else {
+        array.forEach(nombre => {
+            let [a, b] = nombre;
+            document.getElementById('partidos').innerHTML += a + '<input type="number" class="gol" placeholder="Goles">' + '<input  type="number" class="gol" placeholder="Goles">' + b + '<br>';
+        })
+    }
+
 }
 
 
 function guardarGoles() {
-    // if (esLaFinal)  //codigo para el equiposNombres con solo dos strings
-    let goles = [];
-    let gol = document.getElementsByClassName('gol');
-    for (let i = 0; i <= gol.length - 1; i++) {
-        goles.push(parseInt(gol[i].value));
 
+    if (esLaFinal) {
+        let goles = [];
+        let gol = document.getElementsByClassName('gol');
+        for (let i = 0; i <= gol.length - 1; i++) {
+            goles.push(parseInt(gol[i].value));
+
+        }
+        alert(`Estos goles se han guardado: ${goles}`);
+        return perdedores(goles);
+
+
+    } else {
+        let goles = [];
+        let gol = document.getElementsByClassName('gol');
+        for (let i = 0; i <= gol.length - 1; i++) {
+            goles.push(parseInt(gol[i].value));
+
+        }
+        alert(`Estos goles se han guardado: ${goles}`);
+        return agruparGoles(goles);
     }
-    alert(`Estos goles se han guardado: ${goles}`);
-    return agruparGoles(goles);
+
 }
 
 function agruparGoles(goles) {
-    let array = crearArrayGoles(goles);    
+    let array = crearArrayGoles(goles);
     let j = 0;
     for (let i = 0; i <= array.length - 1; i++) {
         while (array[i].length < 2) {
@@ -172,7 +197,7 @@ function agruparGoles(goles) {
         }
     }
     alert(`Estos son los goles agrupados:${array}`);
-    goles = array;    
+    goles = array;
     return perdedores(goles);
 }
 
@@ -186,16 +211,28 @@ function crearArrayGoles(goles) {
 }
 
 function perdedores(array) {
-    let perdedores = [];    
-    for (let i = 0; i <= array.length - 1; i++) {
-        let menor = Math.min(...array[i]);
-        let indiceMenor = array[i].indexOf(menor);
-        perdedores.push(equiposNombres[i][indiceMenor]);
+    if (esLaFinal) {
+        let perdedores = [];
+        let menor = Math.min(...array);//cambio
+        let indiceMenor = array.indexOf(menor);
+        perdedores.push(equiposNombres[indiceMenor]);
         console.log(perdedores);
+        alert(`Pierden: ${perdedores}`);
+        return eliminar(equiposNombres, perdedores);
+    } else {
+        let perdedores = [];
+        for (let i = 0; i <= array.length - 1; i++) {
+            let menor = Math.min(...array[i]);
+            let indiceMenor = array[i].indexOf(menor);
+            perdedores.push(equiposNombres[i][indiceMenor]);
+            console.log(perdedores);
+        }
+        alert(`Pierden: ${perdedores}`);
+        return eliminar(equiposNombres, perdedores);
     }
-    alert(`Pierden: ${perdedores}`);        
-    return eliminar(equiposNombres,perdedores);
 }
+
+
 
 
 guardarGolesBoton.addEventListener('click', guardarGoles);
