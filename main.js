@@ -1,5 +1,3 @@
-// esta es la rama Bryan
-
 let numeroEquipos = document.getElementById('numeroEquipos');
 let inscribirEquipo = document.getElementById('inscribir');
 let totalEquipoInscritosHtml = document.getElementById('totalEquipoInscritos');
@@ -12,8 +10,8 @@ let nombreEquipo = document.getElementById('nombreEquipo');
 let guardarGolesBoton = document.getElementById('guardarGoles');
 let equiposNombres = [];
 let esLaFinal = false;
-let parejas;
 let gol;
+let deNuevo = document.getElementsByClassName('botones')[0];
 
 import { crear as crearEquipo } from './creacionEquipos.js';
 import { desaparecer as desaparecerCreacionEquipo } from './desaparecer.js';
@@ -117,7 +115,8 @@ function eliminar(array, b = valorB()) {
         array.splice(index, 1);
         equiposNombres = array;
         alert(`Los ganadores de la Copa Solanda son ${equiposNombres}`);
-
+        //q me envie a una funcion que quite todo, que muestre la foto, y que muestre un boton para empezar de nuevo
+        mostrarCampeon();
     } else {
         b.forEach(e => {
             for (let i = 0; i <= array.length - 1; i++) {
@@ -247,9 +246,18 @@ function perdedores(array) {
     }
 }
 
+function mostrarCampeon() {
+    document.getElementById('partidosCopa').remove();    
+    document.getElementById('center').innerHTML=equiposNombres+',<br> CAMPEÓN DE LA COPA <br> SOLANDA 2020 ';
+    document.getElementById('conteiner').style.display = 'block';       
 
+}
 
+function recargar() {
+    location.reload();    
+}
 
+deNuevo.addEventListener('click',recargar);
 guardarGolesBoton.addEventListener('click', guardarGoles);
 inscribirEquipo.addEventListener('click', aumentarInscritos);
 comienzoCampeonato.addEventListener('click', empezarCampeonato);

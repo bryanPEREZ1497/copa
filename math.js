@@ -1,22 +1,20 @@
 
 
-const campeon = document.getElementById('campeon');
+const contenedor = document.getElementById('conteiner');
 
 function finCopa() {
    
     document.getElementById('copa').remove();
-    campeon.style.display = 'block';
-    
-    
-    
-    
-    
-     
+    contenedor.style.display = 'block';    
 
 }
 
+function recargar() {
+    location.reload();    
+}
 
-//location.reload();
+
+
 
 
 
