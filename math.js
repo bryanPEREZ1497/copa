@@ -1,7 +1,22 @@
-function crearElemento() {
-    let div = document.createElement('DIV');
-    div.innerHTML='Este es un div';
-    div.id='esteEsId'
-    document.getElementById('seccion').appendChild(div);
+
+
+const campeon = document.getElementById('campeon');
+
+function finCopa() {
+   
+    document.getElementById('copa').remove();
+    campeon.style.display = 'block';
+    
+    
+    
+    
+    
+     
+
 }
+
+
+//location.reload();
+
+
 
