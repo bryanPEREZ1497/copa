@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copa de Fútbol</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="goles.css">
+
+</head>
+
+<body>
+    <div id="inscripcion" >
+        <h1>Copa Solanda</h1>
+        <label for="numeroEquipos"><h2>Número de equipos</h2></label>
+        <input type="" id="numeroEquipos" list="opciones" autofocus>
+        <datalist id="opciones">
+            <option value="2">
+            <option value="4">
+            <option value="8">
+            <option value="16">
+            <option value="32">
+        </datalist>
+        <label for="totalEquipoInscritos"><h2>Total de equipos inscritos</h2></label>
+        <span id="totalEquipoInscritos" style="font-size:40px" >0</span>
+        <div id="creacionEquipos">
+            <input id="nombreEquipo" type="text" placeholder="Nombre del equipo" required>
+        </div>
+        <button id="inscribir" id>Inscribir Equipo</button>
+        <button id="comienzoCampeonato">Comenzar Copa</button>
+    </div>
+
+    <div id="partidosCopa">
+        <h3>Copa Solanda - En desarrollo</h3>
+        <h1>Partidos</h1>
+        <div id="partidos" ></div>
+        <button id="guardarGoles">Guardar Goles</button>
+        
+    </div>
+    <script type="module" src="main.js"></script>
+    <!-- <script type="module" src="goles.js"></script> -->
+</body>
+
+</html>
