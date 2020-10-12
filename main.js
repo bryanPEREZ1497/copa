@@ -56,7 +56,7 @@ function empezarCampeonato() {
     } else {
         alert('equipos insuficientes');
     }
-    //Con esto: document.location='copa.html', puedo ir al html copa para anotar los goles.
+    
 }
 
 function congelarInput() {
@@ -72,13 +72,7 @@ function final(equipo) {
     if (equipo.length === 2) {
         esLaFinal = true;
         alert(`Final de la copa: ${equipo[0]} contra ${equipo[1]}`);
-        mostrarPartidos(equipo);
-        // console.log(`Final de la copa: ${equipo[0]} contra ${equipo[1]}`);
-        // let pierde = prompt('FINAL: ¿Quién pierde?');
-        // let index = equipo.indexOf(pierde);
-        // equipo.splice(index, 1);
-        // console.log(`Gana ${equipo}`);
-        // alert(`Gana ${equipo}`);
+        mostrarPartidos(equipo);        
     }
     else emparejar(equipo);
 }
@@ -103,7 +97,7 @@ function emparejar(equipo) {
             j++;
         }
     }
-    alert(`Aquí se han emparejado los equipos: ${array}`);
+    
     equiposNombres = array;
     return mostrarPartidos(equiposNombres);
 }
@@ -113,9 +107,7 @@ function eliminar(array, b = valorB()) {
     if (esLaFinal) {
         let index = array.indexOf(b[0]);
         array.splice(index, 1);
-        equiposNombres = array;
-        alert(`Los ganadores de la Copa Solanda son ${equiposNombres}`);
-        //q me envie a una funcion que quite todo, que muestre la foto, y que muestre un boton para empezar de nuevo
+        equiposNombres = array;        
         mostrarCampeon();
     } else {
         b.forEach(e => {
@@ -177,7 +169,7 @@ function guardarGoles() {
             goles.push(parseInt(gol[i].value));
 
         }
-        alert(`Estos goles se han guardado: ${goles}`);
+        
         return perdedores(goles);
 
 
@@ -188,7 +180,7 @@ function guardarGoles() {
             goles.push(parseInt(gol[i].value));
 
         }
-        alert(`Estos goles se han guardado: ${goles}`);
+        
         return agruparGoles(goles);
     }
 
@@ -203,7 +195,7 @@ function agruparGoles(goles) {
             j++;
         }
     }
-    alert(`Estos son los goles agrupados:${array}`);
+    
     goles = array;
     return perdedores(goles);
 }
@@ -223,8 +215,8 @@ function perdedores(array) {
         let menor = Math.min(...array);//cambio
         let indiceMenor = array.indexOf(menor);
         perdedores.push(equiposNombres[indiceMenor]);
-        console.log(perdedores);
-        alert(`Pierden: ${perdedores}`);
+        
+        
         return eliminar(equiposNombres, perdedores);
     } else {
         let perdedores = [];
@@ -232,9 +224,9 @@ function perdedores(array) {
             let menor = Math.min(...array[i]);
             let indiceMenor = array[i].indexOf(menor);
             perdedores.push(equiposNombres[i][indiceMenor]);
-            console.log(perdedores);
+            
         }
-        alert(`Pierden: ${perdedores}`);
+        
 
         document.getElementById('partidos').remove();
         let div = document.createElement('DIV');
