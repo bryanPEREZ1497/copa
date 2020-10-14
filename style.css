@@ -1,44 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@100&display=swap');
 
+html {
+    background-image: url("wall2.jpg") ;    
+    background-color: black;
+    /* height:00px; */
+    background-position: center;    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;     
+}
 
 body{
-    font-family: 'Catamaran', sans-serif;    
-    background-image: url("wall2.jpg");    
-    background-size: cover;  
-    background-position: center;      
-    position: relative;
+    font-family: 'Catamaran', sans-serif;        
+    background-color: transparent;   
     color: white;
-    display:flex;
-    align-items: center;
-    justify-content: center;  
+    
 }
 
 
 input{    
     width: 80px;
     padding: 12px 20px;
-    margin: 20px ;
+    margin: ;
     display: inline-block; 
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-family: inherit;
 }
 
 label{
     display: block;
-    margin:32px;
+    /* margin:32px; */
 }
 
 button{
     display: block;
-    margin:32px;
+    margin:auto;
+    width: 200px;
     font-family: inherit;
-    
-
+    padding:12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-span {
-    margin:32px;
+.seccion{
+    background-color: rgba(74, 139, 2,0.2);           
+    display:block;
+    margin:auto;
+    /* line-height: 200px; */
+    height: ;
+    width: 500px;    
+    padding: 12px 0;
+    text-align: center;   
+    border-radius: 20px;
+    
+}
+
+#nombreEquipo{
+    width: 200px;
+    text-align: center;
+}
+
+#numeroEquipos{
+    width: 200px;
+    text-align: center
 }
 
 #creacionEquipos{
@@ -86,4 +112,4 @@ span {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
-  }
+}
