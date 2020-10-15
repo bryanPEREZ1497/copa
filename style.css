@@ -23,10 +23,12 @@ input{
     padding: 12px 20px;
     margin: ;
     display: inline-block; 
-    border: 1px solid #ccc;
+    border: 1px solid rgb(62, 68, 70);
     border-radius: 4px;
     box-sizing: border-box;
     font-family: inherit;
+    color: #e8e6e3;
+    background-color: #181a1b;
 }
 
 label{
@@ -40,8 +42,10 @@ button{
     width: 200px;
     font-family: inherit;
     padding:12px 20px;
-    border: 1px solid #ccc;
+    border: 1px solid rgb(62, 68, 70);
     border-radius: 4px;
+    color: #e8e6e3;
+    background-color: #181a1b;
 }
 
 .seccion{
