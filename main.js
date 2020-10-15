@@ -13,15 +13,30 @@ let esLaFinal = false;
 let gol;
 let deNuevo = document.getElementsByClassName('botones')[0];
 
-import { crear as crearEquipo } from './creacionEquipos.js';
-import { desaparecer as desaparecerCreacionEquipo } from './desaparecer.js';
-import { sortear } from './sortear.js'
+function crear(element) {
+    element.style.display = 'block';
+}
+
+function desaparecer(element) {
+    element.style.display = 'none';
+}
+
+function sortear(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * i);
+        let k = array[i];
+        array[i] = array[j];
+        array[j] = k;
+    }
+    return array;
+}
 
 function aumentarInscritos() {
 
     if (numeroEquiposOpciones.includes(parseInt(numeroEquipos.value))) {
         congelarInput();
-        crearEquipo(equipoCreado);
+        // crearEquipo(equipoCreado);
+        crear(equipoCreado);
         if (nombreEquipo.value) {
             totalEquipoInscritos++;
             equiposNombres.push(nombreEquipo.value);
@@ -33,7 +48,8 @@ function aumentarInscritos() {
 
         if (totalEquipoInscritos === parseInt(numeroEquipos.value)) {
             quitarInscripcion();
-            desaparecerCreacionEquipo(equipoCreado);
+            // desaparecerCreacionEquipo(equipoCreado);
+            desaparecer(equipoCreado);
         }
 
     } else {
@@ -56,7 +72,7 @@ function empezarCampeonato() {
     } else {
         alert('equipos insuficientes');
     }
-    
+
 }
 
 function congelarInput() {
@@ -72,7 +88,7 @@ function final(equipo) {
     if (equipo.length === 2) {
         esLaFinal = true;
         alert(`Final de la copa: ${equipo[0]} contra ${equipo[1]}`);
-        mostrarPartidos(equipo);        
+        mostrarPartidos(equipo);
     }
     else emparejar(equipo);
 }
@@ -97,7 +113,7 @@ function emparejar(equipo) {
             j++;
         }
     }
-    
+
     equiposNombres = array;
     return mostrarPartidos(equiposNombres);
 }
@@ -107,7 +123,7 @@ function eliminar(array, b = valorB()) {
     if (esLaFinal) {
         let index = array.indexOf(b[0]);
         array.splice(index, 1);
-        equiposNombres = array;        
+        equiposNombres = array;
         mostrarCampeon();
     } else {
         b.forEach(e => {
@@ -123,12 +139,6 @@ function eliminar(array, b = valorB()) {
         return concatenar(equiposNombres);
     }
 
-}
-
-function valorB() {
-    let b = prompt('¿Cúales perdieron?')
-    let c = b.split(',')
-    return c;
 }
 
 function concatenar(array) {
@@ -147,12 +157,11 @@ function concatenar(array) {
 function mostrarPartidos(array) {
     if (esLaFinal) {
 
-        document.getElementById('partidos').innerHTML += array[0] + '<input type="number" class="gol" placeholder="Goles">' + '<input  type="number" class="gol" placeholder="Goles">' + array[1] + '<br>';
+        document.getElementById('partidos').innerHTML += '<strong>' + array[0] + '</strong>' + '<input type="number" class="gol" placeholder="Goles">' + '<input  type="number" class="gol" placeholder="Goles">' + '<strong>' + array[1] + '</strong>' + '<br>';
 
     } else {
         array.forEach(nombre => {
             let [a, b] = nombre;
-
             document.getElementById('partidos').innerHTML += a + '<input type="number" class="gol" placeholder="Goles">' + '<input  type="number" class="gol" placeholder="Goles">' + b + '<br>';
         })
     }
@@ -161,28 +170,14 @@ function mostrarPartidos(array) {
 
 
 function guardarGoles() {
+    let goles = [];
+    gol = document.getElementsByClassName('gol');
+    for (let i = 0; i <= gol.length - 1; i++) {
+        goles.push(parseInt(gol[i].value));
 
-    if (esLaFinal) {
-        let goles = [];
-        gol = document.getElementsByClassName('gol');
-        for (let i = 0; i <= gol.length - 1; i++) {
-            goles.push(parseInt(gol[i].value));
-
-        }
-        
-        return perdedores(goles);
-
-
-    } else {
-        let goles = [];
-        gol = document.getElementsByClassName('gol');
-        for (let i = 0; i <= gol.length - 1; i++) {
-            goles.push(parseInt(gol[i].value));
-
-        }
-        
-        return agruparGoles(goles);
     }
+
+    esLaFinal ? perdedores(goles) : agruparGoles(goles);
 
 }
 
@@ -195,7 +190,7 @@ function agruparGoles(goles) {
             j++;
         }
     }
-    
+
     goles = array;
     return perdedores(goles);
 }
@@ -210,46 +205,42 @@ function crearArrayGoles(goles) {
 }
 
 function perdedores(array) {
+    let perdedores = [];
+
     if (esLaFinal) {
-        let perdedores = [];
-        let menor = Math.min(...array);//cambio
+        let menor = Math.min(...array);
         let indiceMenor = array.indexOf(menor);
         perdedores.push(equiposNombres[indiceMenor]);
-        
-        
-        return eliminar(equiposNombres, perdedores);
+
     } else {
-        let perdedores = [];
+
         for (let i = 0; i <= array.length - 1; i++) {
             let menor = Math.min(...array[i]);
             let indiceMenor = array[i].indexOf(menor);
             perdedores.push(equiposNombres[i][indiceMenor]);
-            
         }
-        
 
         document.getElementById('partidos').remove();
         let div = document.createElement('DIV');
         div.id = 'partidos';
         document.getElementById('partidosCopa').insertBefore(div, guardarGolesBoton);
-
-
-        return eliminar(equiposNombres, perdedores);
     }
+
+    return eliminar(equiposNombres, perdedores);
 }
 
 function mostrarCampeon() {
-    document.getElementById('partidosCopa').remove();    
-    document.getElementById('center').innerHTML=equiposNombres+',<br> CAMPEÓN DE LA COPA <br> SOLANDA 2020 ';
-    document.getElementById('conteiner').style.display = 'block';       
+    document.getElementById('partidosCopa').remove();
+    document.getElementById('center').innerHTML = equiposNombres + ',<br> CAMPEÓN DE LA COPA <br> SOLANDA 2020 ';
+    document.getElementById('conteiner').style.display = 'block';
 
 }
 
 function recargar() {
-    location.reload();    
+    location.reload();
 }
 
-deNuevo.addEventListener('click',recargar);
+deNuevo.addEventListener('click', recargar);
 guardarGolesBoton.addEventListener('click', guardarGoles);
 inscribirEquipo.addEventListener('click', aumentarInscritos);
 comienzoCampeonato.addEventListener('click', empezarCampeonato);
