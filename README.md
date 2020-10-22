@@ -3,3 +3,6 @@ Front end que permite inscribir equipos fútbol, escribiendo su nombre, y que en
 
 ## Detalles
 ### 1
+#### 1.2
+#### 1.3
+#### 1.4
